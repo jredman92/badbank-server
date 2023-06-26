@@ -14,7 +14,7 @@ const uri =
 
 app.use(bodyParser.json());
 app.use(express.json());
-app.use(cors());
+app.use(cors("https://badbankmit-e7fce5c065f0.herokuapp.com/"));
 
 mongoose
    .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
