@@ -9,8 +9,8 @@ dotenv.config();
 const PORT = process.env.PORT || 5000;
 
 const app = express();
-const uri =
-   "mongodb+srv://jredman92:volcom88@badbankapp.ucazng2.mongodb.net/?retryWrites=true&w=majority";
+
+const uri = process.env.MONGODB_URI;
 
 app.use(bodyParser.json());
 app.use(express.json());
@@ -24,6 +24,8 @@ mongoose
    .catch((error) => {
       console.log("Error connecting to MongoDB:", error);
    });
+
+// Request to create account
 
 app.post("/accounts", async (req, res) => {
    try {
@@ -45,7 +47,33 @@ app.post("/accounts", async (req, res) => {
       res.status(500).json({ error: "Account creation failed" });
    }
 });
-app.get("/accounts", async (req, res) => {
+
+// Request to create Google OAuth2 account
+
+app.post("/accounts", async (req, res) => {
+   try {
+      const { googleId, name, email } = req.body;
+
+      const newAccount = new Account({
+         name,
+         email,
+         googleId,
+         balance: 0,
+         transactions: [],
+      });
+
+      const savedAccount = await newAccount.save();
+
+      res.status(201).json(savedAccount);
+   } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Account creation failed" });
+   }
+});
+
+// Request to login
+
+app.get("/login", async (req, res) => {
    const { email, password } = req.query;
 
    console.log("Received email:", email);
@@ -69,32 +97,13 @@ app.get("/accounts", async (req, res) => {
    }
 });
 
-// Handle account creation for Google OAuth2 signup
-app.post("/accounts", async (req, res) => {
-   try {
-      const { googleId, name, email } = req.body;
-
-      // Account doesn't exist, create a new one without a password
-      const newAccount = new Account({
-         name,
-         email,
-         googleId,
-         balance: 0,
-         transactions: [],
-      });
-
-      const savedAccount = await newAccount.save();
-
-      res.status(201).json(savedAccount);
-   } catch (error) {
-      console.log(error);
-      res.status(500).json({ error: "Account creation failed" });
-   }
-});
+// Request to make a deposit
 
 app.post("/accounts/deposit", async (req, res) => {
    try {
       const { email, amount } = req.body;
+      console.log("Email:", email);
+      console.log("Amount:", amount);
 
       // Find the account in the database
       const account = await Account.findOne({ email });
@@ -113,6 +122,8 @@ app.post("/accounts/deposit", async (req, res) => {
       res.status(500).json({ error: "Failed to process deposit" });
    }
 });
+
+// Request to make a withdrawal
 
 app.post("/accounts/withdraw", async (req, res) => {
    try {
