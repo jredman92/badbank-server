@@ -30,6 +30,12 @@ app.post("/accounts", async (req, res) => {
    try {
       const { name, email, password } = req.body;
 
+      // Check if account already exists with the given email
+      const existingAccount = await Account.findOne({ email });
+      if (existingAccount) {
+         return res.status(409).json({ error: "Account already exists" });
+      }
+
       const newAccount = new Account({
          name,
          email,
