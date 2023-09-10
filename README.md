@@ -84,14 +84,6 @@ To set up your MongoDB credentials, follow these steps:
 
 By following these steps, you will have your own MongoDB credentials configured for the BadBank server.
 
-## Usage
-Here, you can provide information on how to use the backend API, including authentication, making requests, and handling responses. You can also include code examples if necessary.
-
-## API Documentation
-For detailed information on the API endpoints and how to interact with the backend, refer to the API Documentation.
-
-## Contributing
-We welcome contributions to improve the BadBank Server. If you'd like to contribute, please follow our Contribution Guidelines.
 
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.
