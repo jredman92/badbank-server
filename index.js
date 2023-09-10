@@ -57,12 +57,11 @@ app.post("/accounts", async (req, res) => {
 
 app.post("/accounts", async (req, res) => {
    try {
-      const { googleId, name, email } = req.body;
+      const { name, email } = req.body;
 
       const newAccount = new Account({
          name,
          email,
-         googleId,
          balance: 0,
          transactions: [],
       });
