@@ -1,6 +1,6 @@
 # BadBank Server
 
-Welcome to the backend repository of the BadBank application. This server serves as the core of the BadBank application, handling user authentication, transaction processing, and other essential banking functionalities. This must be run in addition to the badBank-client repository to run properly.
+Welcome to the backend repository of the BadBank application. This server serves as the core of the BadBank application, handling user authentication, transaction processing, and other essential banking functionalities. This must be run in addition to the badbank-client repository to run properly.
 
 ## Table of Contents
 
